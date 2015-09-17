@@ -322,7 +322,7 @@ var Typeahead = (function() {
     var $input, $wrapper, $dropdown, $hint;
 
     $input = $(input);
-    $wrapper = $(html.wrapper).css(css.wrapper);
+    $wrapper = $(html.wrapper);
     $dropdown = $(html.dropdown).css(css.dropdown);
     $hint = $input.clone().css(css.hint).css(getBackgroundStyles($input));
 
@@ -351,9 +351,25 @@ var Typeahead = (function() {
     // ie7 does not like it when dir is set to auto
     try { !$input.attr('dir') && $input.attr('dir', 'auto'); } catch (e) {}
 
+    // Obscure fix to an obscure bug, google search yields nothing :(
+    // Line by line stepping through the debugger saved the day.
+    // The library by default wraps <span class="twitter-typeahead"></span>
+    // around the input field, internally that trigger some sort of append
+    // where input element is taken out of the dom tree and re-appended.
+    // This caused some problems with mobile browser, as you see when
+    // an input field is taken out from the dom tree it loses focus.
+    // Customers are enraged when their half entered field suddenly loses focus.
+    // Another thing is that you cannot use $input.click() or $input.focus()
+    // to trigger focus and keyboard on the field in mobile browser.
+    // The solution is to wrap <span class="twitter-typeahead"></span> in server side html.
+    // In order to maximize compatibility with whomever is using this library
+    // I opted to do this detection below
+    if (!$input.parent().hasClass('twitter-typeahead')) {
+      $input.wrap($wrapper);
+    }
     return $input
-    .wrap($wrapper)
     .parent()
+    .css(css.wrapper)
     .prepend(withHint ? $hint : null)
     .append($dropdown);
   }

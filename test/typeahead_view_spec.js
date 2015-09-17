@@ -568,3 +568,36 @@ describe('Typeahead', function() {
     });
   });
 });
+
+describe('Typeahead Pre-wrapped', function() {
+
+  beforeEach(function () {
+    var $fixture;
+
+    jasmine.Input.useMock();
+    jasmine.Dataset.useMock();
+    jasmine.Dropdown.useMock();
+
+    setFixtures(fixtures.html.textInput);
+
+    $fixture = $('#jasmine-fixtures');
+    this.$input = $fixture.find('input')
+      .wrap('<span class="twitter-typeahead"></span>');
+
+    new Typeahead({
+      input: this.$input,
+      withHint: true,
+      datasets: {}
+    });
+  });
+
+  describe('input wrapper after initialized', function () {
+    it('parent of $input should contain correct classes', function () {
+      expect(this.$input.parent()).toHaveClass('twitter-typeahead');
+      expect(this.$input.parent()).toHaveCss({
+        position: 'relative',
+        display: 'inline-block'
+      });
+    });
+  });
+});

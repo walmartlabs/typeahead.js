@@ -1,7 +1,7 @@
 /*!
  * typeahead.js 0.10.5
  * https://github.com/twitter/typeahead.js
- * Copyright 2013-2014 Twitter, Inc. and other contributors; Licensed MIT
+ * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
  */
 
 (function($) {
@@ -1048,7 +1048,7 @@
         function buildDom(input, withHint) {
             var $input, $wrapper, $dropdown, $hint;
             $input = $(input);
-            $wrapper = $(html.wrapper).css(css.wrapper);
+            $wrapper = $(html.wrapper);
             $dropdown = $(html.dropdown).css(css.dropdown);
             $hint = $input.clone().css(css.hint).css(getBackgroundStyles($input));
             $hint.val("").removeData().addClass("tt-hint").removeAttr("id name placeholder required").prop("readonly", true).attr({
@@ -1069,7 +1069,10 @@
             try {
                 !$input.attr("dir") && $input.attr("dir", "auto");
             } catch (e) {}
-            return $input.wrap($wrapper).parent().prepend(withHint ? $hint : null).append($dropdown);
+            if (!$input.parent().hasClass("twitter-typeahead")) {
+                $input.wrap($wrapper);
+            }
+            return $input.parent().css(css.wrapper).prepend(withHint ? $hint : null).append($dropdown);
         }
         function getBackgroundStyles($el) {
             return {
