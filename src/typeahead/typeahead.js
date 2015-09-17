@@ -364,7 +364,7 @@ var Typeahead = (function() {
     // The solution is to wrap <span class="twitter-typeahead"></span> in server side html.
     // In order to maximize compatibility with whomever is using this library
     // I opted to do this detection below
-    if (!$input.parent().hasClass("twitter-typeahead")) {
+    if (!$input.parent().hasClass('twitter-typeahead')) {
       $input.wrap($wrapper);
     }
     return $input
