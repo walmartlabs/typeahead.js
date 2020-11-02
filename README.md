@@ -1,3 +1,11 @@
+***
+# NOTICE:
+
+## This repository has been archived and is not supported.
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+***
+
 [![build status](https://secure.travis-ci.org/twitter/typeahead.js.svg?branch=master)](http://travis-ci.org/twitter/typeahead.js)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
